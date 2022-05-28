@@ -3,7 +3,7 @@
 let s = 'X'; // the string we will manipulate
 let x, y, th; // xy coordinates and angle of travel
 let brown, green; // colors to lerp between
-let t = 0;
+let t = -5;
 
 function setup() {
     // set some drawing parameters
@@ -19,7 +19,7 @@ function setup() {
         for (let i = 0; i < s.length; i++) {
             let c = s.charAt(i);
             if (c === 'X') {
-                next += 'F+[[X]-X]-F[-FX]+X';
+                next += 'F[+X][-X]FX';
             } else if (c === 'F') {
                 next += 'FF';
             } else {
@@ -36,7 +36,7 @@ function setup() {
     th = 90;
 
     brown = color("brown");
-
+    green = color("green");
 }
 
 let i = 0; // string index
@@ -50,6 +50,7 @@ function draw() {
         // draw forward
         let xp = x + dl * cos(th);
         let yp = y - dl * sin(th);
+        stroke(lerpColor(brown, green, sigmoid(t)));
         line(x, y, xp, yp);
         x = xp;
         y = yp;
@@ -62,9 +63,11 @@ function draw() {
     } else if (c === '[') {
         // save current config
         stack.push([x, y, th]);
+        t += 2;
     } else if (c === ']') {
         // get last saved config
         [x, y, th] = stack.pop();
+        t -= 2;
     }
 
     i++;
@@ -77,4 +80,9 @@ function draw() {
         y = height;
         th = 90;
     }
+}
+
+
+function sigmoid(x) {
+    return 1 / (1 + exp(-x));
 }
