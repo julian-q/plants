@@ -15,11 +15,21 @@ function setup() {
     console.log('generating...');
     for (let iter = 0; iter < 8; iter++) {
         let next = '';
+        let order = 0;
         for (let i = 0; i < s.length; i++) {
             let c = s.charAt(i);
+            if (c === '[') {
+                order += 0.5;
+            } else if (c === ']') {
+                order -= 0.5;
+            }
             if (c === 'X') {
-                if (Math.random() > 0.2) {
-                    next += '[[-FX]+FX]';
+                let prob = 0.8;
+                if (order > 3) {
+                    prob = 0.3;
+                }
+                if (Math.random() < prob) {
+                    next += '[[-FX]+[FX]]';
                 } else {
                     next += 'F';
                 }
@@ -44,8 +54,9 @@ function setup() {
 let i = 0; // string index
 let stack = []; // to store configs when encountering brackets
 const dl = 50; // forward draw distance (pixels)
-const dth = 25.7; // rotation angle (degrees)
-const ath = 20; // adjustment angle (degrees)
+const dth = 25; // average rotation angle (degrees)
+const max_inc_th = 10 // maximum deviation from average rotationg angle (degrees)
+const ath = 10; // adjustment angle (degrees)
 
 
 function draw() {
@@ -54,13 +65,13 @@ function draw() {
         for (let i = 0; i < n; i++) {
             sum += Math.random();
         }
-        return (sum / n);
+        return ((sum / n) * 2) - 1; // mean is 0, output in [-1, 1]
     }
     let c = s.charAt(i);
     if (c === 'F') {
         // draw forward
-        let xp = x + dl * cos(th) * normal();
-        let yp = y - dl * sin(th) * normal();
+        let xp = x + dl * cos(th);
+        let yp = y - dl * sin(th);
         // stroke(lerpColor(green, blue, sigmoid(t)));
         stroke(brown)
         line(x, y, xp, yp);
@@ -69,15 +80,15 @@ function draw() {
     } else if (c === '-') {
         // rotate left
         while (th - dth < -10) {
-            th += ath * normal();
+            th += ath * (normal() + 1);
         }
-        th -= dth;
+        th -= dth + max_inc_th * (Math.random() * 2 - 1);
     } else if (c === '+') {
         // rotate right
         while (th + dth > 190) {
-            th -= ath * normal();
+            th -= ath * (normal() + 1);
         }
-        th += dth;
+        th += dth + max_inc_th * (Math.random() * 2 - 1);
     } else if (c === '[') {
         // save current config
         stack.push([x, y, th]);
