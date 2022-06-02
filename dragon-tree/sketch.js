@@ -84,8 +84,8 @@ function draw() {
     }
 
     function boundary(i) {
-        // return ((i - width / 2)**2) * 0.0005 + 500
-        return 140 * log(i) - 300
+        return ((i - width / 2)**2) * 0.0005 + 500
+        // return 140 * log(i) - 300
     }
 
     function pre_boundary(i, width=dl/2) {
@@ -114,7 +114,7 @@ function draw() {
                 yp = y - dl * sin(th);
             }
             // stroke(lerpColor(green, blue, sigmoid(t)));
-            gradientLine(x, y, xp, yp, color(100, 200, 200), color(1100 - yp, 200, 200), 3);
+            gradientLine(x, y, xp, yp, color(1000 - y, 200, 200), color(1000 - yp, 200, 200), 3);
             // line(x, y, xp, yp);
             x = xp;
             y = yp;
