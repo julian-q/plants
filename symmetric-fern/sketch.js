@@ -13,7 +13,7 @@ function setup() {
     angleMode(DEGREES);
     // use the grammar to generate a string
     console.log('generating...');
-    for (let iter = 0; iter < 7; iter++) {
+    for (let iter = 0; iter < 5; iter++) {
         let next = '';
         for (let i = 0; i < s.length; i++) {
             let c = s.charAt(i);
@@ -35,7 +35,7 @@ function setup() {
     th = 90;
 
     brown = color("brown");
-    green = color("green");
+    green = color("brown");
 }
 
 let i = 0; // string index
@@ -71,13 +71,13 @@ function draw() {
 
     i++;
     if (i == s.length) {
-        i = 0;
-        // clear the screen and reset coords
-        background("white");
-        console.log('reseting...');
-        x = width / 2;
-        y = height;
-        th = 90;
+        // i = 0;
+        // // clear the screen and reset coords
+        // background("white");
+        // console.log('reseting...');
+        // x = width / 2;
+        // y = height;
+        // th = 90;
     }
 }
 

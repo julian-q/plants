@@ -8,7 +8,9 @@ let t = -5;
 function setup() {
     // set some drawing parameters
     createCanvas(1000, 1000);
-    background("white");
+    colorMode(HSL, 500)
+    noStroke()
+    background("black");
     strokeWeight(2);
     angleMode(DEGREES);
     // use the grammar to generate a string
@@ -48,8 +50,9 @@ function setup() {
 
     blue = color("blue");
     green = color("green");
-    brown = color("brown")
 }
+
+
 
 let i = 0; // string index
 let stack = []; // to store configs when encountering brackets
@@ -60,6 +63,18 @@ const ath = 10; // adjustment angle (degrees)
 
 
 function draw() {
+    function gradientLine(x1, y1, x2, y2, c1, c2, sz) {
+        const d = dist(x1, y1, x2, y2)
+        for (let i = 0; i < d; i++) {
+          const step = map(i, 0, d, 0, 1)
+          const x = lerp(x1, x2, step)
+          const y = lerp(y1, y2, step)
+          const c = lerpColor(c1, c2, step)
+          fill(c)
+          ellipse(x, y, sz, sz)
+        }
+    }
+
     function normal(n=8) {
         let sum = 0;
         for (let i = 0; i < n; i++) {
@@ -69,7 +84,8 @@ function draw() {
     }
 
     function boundary(i) {
-        return ((i - width / 2)**2) * 0.0005 + 500
+        // return ((i - width / 2)**2) * 0.0005 + 500
+        return 140 * log(i) - 300
     }
 
     function pre_boundary(i, width=dl/2) {
@@ -98,8 +114,8 @@ function draw() {
                 yp = y - dl * sin(th);
             }
             // stroke(lerpColor(green, blue, sigmoid(t)));
-            stroke(brown)
-            line(x, y, xp, yp);
+            gradientLine(x, y, xp, yp, color(100, 200, 200), color(1100 - yp, 200, 200), 3);
+            // line(x, y, xp, yp);
             x = xp;
             y = yp;
         }   
