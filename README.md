@@ -17,5 +17,7 @@ by Pino Cholsaipant and Julian Quevedo
 
 [wavy](wavy/)
 
+[wavy (BW)](wavy-normal/)
+
 [wispy fern](wispy-fern/)
 
