@@ -13,11 +13,7 @@ function setup() {
     angleMode(DEGREES);
     // use the grammar to generate a string
     console.log('generating...');
-<<<<<<< HEAD
     for (let iter = 0; iter < 5; iter++) {
-=======
-    for (let iter = 0; iter < 8; iter++) {
->>>>>>> 4283a1968dab0cbc19be29c1a0b4d0bc8ccf171b
         let next = '';
         for (let i = 0; i < s.length; i++) {
             let c = s.charAt(i);
