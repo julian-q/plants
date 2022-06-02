@@ -10,6 +10,8 @@ let s = [
 
 function setup() {
     createCanvas(1000, 1000, WEBGL);
+    colorMode(HSL, 800);
+    noStroke();
     background('black');
 
     for (let iter = 0; iter < 10; iter++) {
@@ -55,6 +57,7 @@ function setup() {
     }
 }
 
+
 let x = 0;
 let y = 500;
 let z = 0;
@@ -67,17 +70,31 @@ let stack = [];
 const V = [0, -1, 0];
 
 let i = 0;
-
+let brush_size = 7;
 function draw() {
-    stroke("white");
+    // stroke("white");
+    function gradientLine(x1, y1, x2, y2, c1, c2, sz) {
+        const d = dist(x1, y1, x2, y2)
+        for (let i = 0; i < d; i++) {
+            const step = map(i, 0, d, 0, 1)
+            const x = lerp(x1, x2, step)
+            const y = lerp(y1, y2, step)
+            const c = lerpColor(c1, c2, step)
+            fill(c)
+            ellipse(x, y, sz, sz)
+        }
+    }
+    
 
     let c = s[i];
+    
     if (c[0] === 'F') {
         let a = c[1];
         let xp = x + a * H[0];
         let yp = y + a * H[1];
         let zp = z + a * H[2];
-        line(x, y, z, xp, yp, zp);
+        // line(x, y, z, xp, yp, zp);
+        gradientLine(x, y, xp, yp, color(y, 200, 200), color(yp, 200, 200), brush_size)
         x = xp;
         y = yp;
         z = zp;
@@ -115,7 +132,8 @@ function draw() {
     } 
     else if (c[0] === '!') {
         let w = c[1];
-        strokeWeight(w);
+        // strokeWeight(w);
+        brush_size = w
     } 
     else if (c[0] === '[') {
         stack.push([x, y, z, H, L, U]);
