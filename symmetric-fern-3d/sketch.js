@@ -7,17 +7,13 @@ let t = -5;
 
 function setup() {
     // set some drawing parameters
-    createCanvas(1000, 1000);
-    background("white");
+    createCanvas(500, 500, WEBGL);
+    // background("white");
     strokeWeight(2);
     angleMode(DEGREES);
     // use the grammar to generate a string
     console.log('generating...');
-<<<<<<< HEAD
-    for (let iter = 0; iter < 5; iter++) {
-=======
     for (let iter = 0; iter < 8; iter++) {
->>>>>>> 4283a1968dab0cbc19be29c1a0b4d0bc8ccf171b
         let next = '';
         for (let i = 0; i < s.length; i++) {
             let c = s.charAt(i);
@@ -33,13 +29,13 @@ function setup() {
         console.log(s);
     }
     // start at the bottom middle
-    x = width / 2;
-    y = height;
+    x = 0;
+    y = height / 2;
     // start pointing up
     th = 90;
 
     brown = color("brown");
-    green = color("brown");
+    green = color("green");
 }
 
 let i = 0; // string index
@@ -48,13 +44,17 @@ const dl = 2; // forward draw distance (pixels)
 const dth = 25.7; // rotation angle (degrees)
 
 function draw() {
+    push();
+    // rotateY(mouseX);
+    beginShape(LINES);
     let c = s.charAt(i);
     if (c === 'F') {
         // draw forward
         let xp = x + dl * cos(th);
         let yp = y - dl * sin(th);
-        stroke(lerpColor(brown, green, sigmoid(t)));
-        line(x, y, xp, yp);
+        // stroke(lerpColor(brown, green, sigmoid(t)));
+        stroke("white");
+        line(x, y, 0, xp, yp, 0);
         x = xp;
         y = yp;
     } else if (c === '-') {
@@ -75,14 +75,16 @@ function draw() {
 
     i++;
     if (i == s.length) {
-        // i = 0;
-        // // clear the screen and reset coords
-        // background("white");
-        // console.log('reseting...');
-        // x = width / 2;
-        // y = height;
-        // th = 90;
+        i = 0;
+        // clear the screen and reset coords
+        background("white");
+        console.log('reseting...');
+        x = width / 2;
+        y = height;
+        th = 90;
     }
+    endShape();
+    pop();
 }
 
 
