@@ -7,8 +7,8 @@ let t = -5;
 
 function setup() {
     // set some drawing parameters
-    createCanvas(1000, 1000);
-    background("white");
+    createCanvas(500, 500, WEBGL);
+    // background("white");
     strokeWeight(2);
     angleMode(DEGREES);
     // use the grammar to generate a string
@@ -29,8 +29,8 @@ function setup() {
         console.log(s);
     }
     // start at the bottom middle
-    x = width / 2;
-    y = height;
+    x = 0;
+    y = height / 2;
     // start pointing up
     th = 90;
 
@@ -44,13 +44,17 @@ const dl = 2; // forward draw distance (pixels)
 const dth = 25.7; // rotation angle (degrees)
 
 function draw() {
+    push();
+    // rotateY(mouseX);
+    beginShape(LINES);
     let c = s.charAt(i);
     if (c === 'F') {
         // draw forward
         let xp = x + dl * cos(th);
         let yp = y - dl * sin(th);
-        stroke(lerpColor(brown, green, sigmoid(t)));
-        line(x, y, xp, yp);
+        // stroke(lerpColor(brown, green, sigmoid(t)));
+        stroke("white");
+        line(x, y, 0, xp, yp, 0);
         x = xp;
         y = yp;
     } else if (c === '-') {
@@ -79,6 +83,8 @@ function draw() {
         y = height;
         th = 90;
     }
+    endShape();
+    pop();
 }
 
 
