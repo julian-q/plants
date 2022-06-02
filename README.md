@@ -1,4 +1,4 @@
-# Lindenmeyer Systems
+# Lindenmayer Systems
 by Pino Cholsaipant and Julian Quevedo
 
 [actual seaweed](actual-seaweed/)
